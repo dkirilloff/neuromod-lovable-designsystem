@@ -1,4 +1,4 @@
-import { Suspense, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
@@ -10,6 +10,20 @@ interface TreeSceneProps {
 function Tree({ lightIntensity }: TreeSceneProps) {
   const group = useRef<THREE.Group>(null);
   const { scene } = useGLTF("/models/tree.glb");
+
+  useEffect(() => {
+    scene.traverse((child) => {
+      const mesh = child as THREE.Mesh;
+      if (mesh.isMesh) {
+        const mat = mesh.material as THREE.MeshStandardMaterial;
+        if (mat) {
+          mat.envMapIntensity = 0;
+        }
+        mesh.castShadow = false;
+        mesh.receiveShadow = false;
+      }
+    });
+  }, [scene]);
 
   useFrame(() => {
     if (group.current) {
@@ -32,22 +46,21 @@ function Tree({ lightIntensity }: TreeSceneProps) {
   });
 
   return (
-    <group ref={group}>
+    <group ref={group} position={[0, -0.5, 0]} scale={1.5}>
       <primitive object={scene} />
     </group>
   );
 }
 
 export function TreeScene({ lightIntensity }: TreeSceneProps) {
-  const dirIntensity = 0.2 + (lightIntensity / 100) * 1.3;
   return (
     <Canvas
-      camera={{ position: [0, 1, 4], fov: 45 }}
+      camera={{ position: [0, 0.5, 2.5], fov: 45 }}
       gl={{ alpha: true }}
       style={{ background: "transparent" }}
     >
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[-5, 5, 3]} intensity={dirIntensity} />
+      <ambientLight intensity={0.8} />
+      <directionalLight position={[0, 5, 2]} intensity={1.2} />
       <Suspense fallback={null}>
         <Tree lightIntensity={lightIntensity} />
       </Suspense>
