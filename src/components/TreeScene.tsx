@@ -15,9 +15,14 @@ function Tree({ lightIntensity }: TreeSceneProps) {
     scene.traverse((child) => {
       const mesh = child as THREE.Mesh;
       if (mesh.isMesh) {
-        const mat = mesh.material as THREE.MeshStandardMaterial;
-        if (mat) {
-          mat.envMapIntensity = 0;
+        const original = mesh.material as THREE.MeshStandardMaterial;
+        if (original) {
+          const cloned = original.clone() as THREE.MeshStandardMaterial;
+          cloned.fog = false;
+          cloned.envMapIntensity = 0;
+          if (cloned.emissive) cloned.emissive.set(0x000000);
+          cloned.emissiveIntensity = 0;
+          mesh.material = cloned;
         }
         mesh.castShadow = false;
         mesh.receiveShadow = false;
@@ -57,6 +62,7 @@ export function TreeScene({ lightIntensity }: TreeSceneProps) {
     <Canvas
       camera={{ position: [0, 0.5, 2.5], fov: 45 }}
       gl={{ alpha: true }}
+      scene={{ background: null }}
       style={{ background: "transparent" }}
     >
       <ambientLight intensity={0.8} />
