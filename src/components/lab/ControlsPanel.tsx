@@ -1,7 +1,14 @@
 import { Sun, Wind, Play, RotateCcw } from "lucide-react";
 import { Dial } from "./Dial";
 
-export function ControlsPanel() {
+interface ControlsPanelProps {
+  lightValue: number;
+  setLightValue: (v: number) => void;
+  co2Value: number;
+  setCo2Value: (v: number) => void;
+}
+
+export function ControlsPanel({ lightValue, co2Value }: ControlsPanelProps) {
   return (
     <div className="glass-panel rounded-xl p-4 flex flex-col h-full overflow-hidden">
       <div className="flex items-center justify-between mb-2 shrink-0">
@@ -21,17 +28,17 @@ export function ControlsPanel() {
       <div className="flex-1 flex items-center justify-around gap-2">
         <Dial
           label="Свет"
-          value={72}
+          value={lightValue}
           unit="LUX"
-          displayValue="7,200"
+          displayValue={(lightValue * 100).toLocaleString()}
           icon={<Sun className="w-3.5 h-3.5" />}
         />
         <div className="w-px h-24 bg-border/60" />
         <Dial
           label="CO₂"
-          value={45}
+          value={co2Value}
           unit="PPM"
-          displayValue="450"
+          displayValue={(co2Value * 10).toString()}
           icon={<Wind className="w-3.5 h-3.5" />}
         />
       </div>
