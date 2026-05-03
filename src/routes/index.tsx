@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { TopBar } from "@/components/lab/TopBar";
 import { Sidebar } from "@/components/lab/Sidebar";
 import { SimulationPanel } from "@/components/lab/SimulationPanel";
@@ -17,6 +18,9 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const [lightValue, setLightValue] = useState(72);
+  const [co2Value, setCo2Value] = useState(45);
+
   return (
     <div className="h-screen w-screen flex flex-col bg-background text-foreground overflow-hidden">
       <TopBar />
@@ -25,12 +29,17 @@ function Index() {
         <main className="flex-1 flex flex-col gap-3 p-3 min-w-0">
           {/* Top 55% */}
           <div className="grid grid-cols-2 gap-3" style={{ flex: "55 1 0%", minHeight: 0 }}>
-            <SimulationPanel />
+            <SimulationPanel lightValue={lightValue} />
             <ChartPanel />
           </div>
           {/* Bottom 45% */}
           <div className="grid grid-cols-2 gap-3" style={{ flex: "45 1 0%", minHeight: 0 }}>
-            <ControlsPanel />
+            <ControlsPanel
+              lightValue={lightValue}
+              setLightValue={setLightValue}
+              co2Value={co2Value}
+              setCo2Value={setCo2Value}
+            />
             <ChatPanel />
           </div>
         </main>
