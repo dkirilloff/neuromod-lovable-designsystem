@@ -1,6 +1,11 @@
 import { Activity } from "lucide-react";
+import { TreeScene } from "@/components/TreeScene";
 
-export function SimulationPanel() {
+interface SimulationPanelProps {
+  lightValue: number;
+}
+
+export function SimulationPanel({ lightValue }: SimulationPanelProps) {
   return (
     <div className="glass-panel rounded-xl p-4 flex flex-col h-full overflow-hidden relative">
       <div className="flex items-center justify-between mb-3 shrink-0">
@@ -40,30 +45,9 @@ export function SimulationPanel() {
           />
         ))}
 
-        {/* plant */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex flex-col items-center">
-          <svg width="160" height="180" viewBox="0 0 160 180" className="animate-sway">
-            <defs>
-              <linearGradient id="leaf" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="oklch(0.85 0.2 145)" />
-                <stop offset="100%" stopColor="oklch(0.55 0.18 145)" />
-              </linearGradient>
-              <linearGradient id="stem" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="oklch(0.7 0.15 140)" />
-                <stop offset="100%" stopColor="oklch(0.45 0.1 140)" />
-              </linearGradient>
-            </defs>
-            {/* stem */}
-            <path d="M80 180 Q78 130 80 80 Q82 50 80 30" stroke="url(#stem)" strokeWidth="4" fill="none" strokeLinecap="round" />
-            {/* leaves */}
-            <ellipse cx="50" cy="90" rx="32" ry="14" fill="url(#leaf)" transform="rotate(-25 50 90)" opacity="0.95" />
-            <ellipse cx="110" cy="75" rx="34" ry="14" fill="url(#leaf)" transform="rotate(25 110 75)" opacity="0.95" />
-            <ellipse cx="55" cy="55" rx="26" ry="11" fill="url(#leaf)" transform="rotate(-30 55 55)" opacity="0.9" />
-            <ellipse cx="105" cy="45" rx="28" ry="12" fill="url(#leaf)" transform="rotate(30 105 45)" opacity="0.9" />
-            <ellipse cx="80" cy="28" rx="20" ry="10" fill="url(#leaf)" opacity="0.95" />
-          </svg>
-          {/* pot */}
-          <div className="w-24 h-8 -mt-2 bg-gradient-to-b from-[oklch(0.35_0.04_60)] to-[oklch(0.22_0.03_60)] rounded-b-lg border border-white/5 shadow-lg" style={{ clipPath: "polygon(8% 0, 92% 0, 100% 100%, 0 100%)" }} />
+        {/* 3D tree */}
+        <div className="absolute inset-0">
+          <TreeScene lightIntensity={lightValue} />
         </div>
 
         {/* O2 bubbles */}
