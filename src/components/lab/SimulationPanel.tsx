@@ -20,49 +20,54 @@ export function SimulationPanel({ lightValue }: SimulationPanelProps) {
       </div>
 
       <div className="flex-1 relative rounded-lg grid-bg bg-[oklch(0.15_0.025_145)] overflow-hidden border border-border/50">
-        {/* lamp light cone */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[120px] border-r-[120px] border-t-[180px] border-l-transparent border-r-transparent border-t-[oklch(0.85_0.18_95/0.2)] animate-lamp" />
-
-        {/* lamp */}
-        <div className="absolute top-2 left-1/2 -translate-x-1/2 flex flex-col items-center">
-          <div className="w-1 h-6 bg-gradient-to-b from-muted-foreground/40 to-muted-foreground/60" />
-          <div className="relative w-16 h-8 rounded-b-full bg-gradient-to-b from-[oklch(0.4_0.04_95)] to-[oklch(0.3_0.03_95)] border border-white/10">
-            <div className="absolute inset-x-2 -bottom-1 h-3 rounded-full bg-gradient-to-b from-[oklch(0.95_0.15_95)] to-[oklch(0.8_0.18_95)] blur-[1px] animate-lamp shadow-[0_0_30px_oklch(0.85_0.18_95/0.7)]" />
-          </div>
-        </div>
-
-        {/* CO2 particles */}
-        {[...Array(8)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 rounded-full bg-primary/40"
-            style={{
-              left: `${10 + i * 11}%`,
-              top: `${30 + (i % 3) * 15}%`,
-              animation: `pulse-glow ${2 + (i % 3)}s ease-in-out infinite`,
-              animationDelay: `${i * 0.3}s`,
-            }}
-          />
-        ))}
-
         {/* 3D tree */}
         <div className="absolute inset-0">
           <TreeScene lightIntensity={lightValue} />
         </div>
 
-        {/* O2 bubbles */}
-        {[...Array(5)].map((_, i) => (
+        {/* lamp light cone */}
+        <div
+          className="absolute top-8 left-1/2 -translate-x-1/2 pointer-events-none"
+          style={{
+            width: `${120 + lightValue * 1.6}px`,
+            height: `${140 + lightValue * 1.2}px`,
+            background:
+              "radial-gradient(ellipse at top, oklch(0.92 0.14 90 / 0.35) 0%, oklch(0.92 0.14 90 / 0.12) 40%, transparent 75%)",
+            clipPath: "polygon(35% 0, 65% 0, 100% 100%, 0 100%)",
+            opacity: 0.4 + (lightValue / 100) * 0.6,
+            transition: "opacity 0.3s, width 0.3s, height 0.3s",
+          }}
+        />
+
+        {/* grow light */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none">
+          {/* cable */}
+          <div className="w-px h-5 bg-gradient-to-b from-white/10 to-white/30" />
+          {/* mount */}
+          <div className="w-3 h-1 rounded-sm bg-gradient-to-b from-white/30 to-white/10" />
+          {/* lamp body */}
           <div
-            key={`o2-${i}`}
-            className="absolute w-2 h-2 rounded-full border border-primary/60 bg-primary/10 backdrop-blur-sm"
+            className="relative rounded-md border border-white/15 shadow-[0_4px_12px_rgba(0,0,0,0.6)]"
             style={{
-              left: `${45 + i * 4}%`,
-              bottom: `${20 + i * 12}%`,
-              animation: `pulse-glow ${3 + (i % 2)}s ease-in-out infinite`,
-              animationDelay: `${i * 0.5}s`,
+              width: 120,
+              height: 10,
+              background:
+                "linear-gradient(180deg, oklch(0.45 0.01 250) 0%, oklch(0.28 0.01 250) 50%, oklch(0.18 0.01 250) 100%)",
             }}
-          />
-        ))}
+          >
+            {/* LED strip */}
+            <div
+              className="absolute inset-x-1.5 -bottom-[2px] h-[3px] rounded-full"
+              style={{
+                background:
+                  "linear-gradient(90deg, oklch(0.95 0.12 90) 0%, oklch(1 0.08 95) 50%, oklch(0.95 0.12 90) 100%)",
+                boxShadow: `0 0 ${8 + lightValue * 0.4}px ${2 + lightValue * 0.15}px oklch(0.92 0.16 90 / ${0.4 + (lightValue / 100) * 0.5})`,
+                opacity: 0.6 + (lightValue / 100) * 0.4,
+                transition: "box-shadow 0.3s, opacity 0.3s",
+              }}
+            />
+          </div>
+        </div>
 
         {/* metric overlay */}
         <div className="absolute bottom-3 left-3 glass-panel-elevated rounded-md px-2.5 py-1.5 flex items-center gap-2">
