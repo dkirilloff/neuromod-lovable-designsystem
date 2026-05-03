@@ -62,6 +62,7 @@ export function TreeScene({ lightIntensity }: TreeSceneProps) {
     <Canvas
       camera={{ position: [0, 0.5, 2.5], fov: 45 }}
       gl={{ alpha: true }}
+      scene={{ background: null }}
       style={{ background: "transparent" }}
     >
       <ambientLight intensity={0.8} />
