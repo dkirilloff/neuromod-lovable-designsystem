@@ -10,7 +10,7 @@ export function TopBar() {
         </div>
         <div className="flex items-baseline gap-2">
           <span className="text-[15px] font-semibold tracking-tight text-glow">Нейромод</span>
-          <span className="text-[11px] text-muted-foreground font-mono">v0.1 · LAB</span>
+          <span className="text-[11px] text-muted-foreground font-mono">v0.2 · LAB</span>
         </div>
       </div>
 
