@@ -5,7 +5,7 @@ export function TopBar() {
   return (
     <header className="h-14 shrink-0 flex items-center justify-between px-5 border-b border-border/60 glass-panel relative z-10">
       <div className="flex items-center gap-3">
-        <img src={modumLogo} alt="Modum Lab" className="h-7 w-auto" />
+        <img src={modumLogo} alt="Modum Lab" className="h-7 w-auto invert brightness-200" />
         <span className="text-[11px] text-muted-foreground font-mono">v0.3 · LAB</span>
       </div>
 
