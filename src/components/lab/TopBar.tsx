@@ -1,17 +1,12 @@
-import { Sparkles, BookOpen, Settings2 } from "lucide-react";
+import { BookOpen, Settings2 } from "lucide-react";
+import modumLogo from "@/assets/modum-lab-logo.png";
 
 export function TopBar() {
   return (
     <header className="h-14 shrink-0 flex items-center justify-between px-5 border-b border-border/60 glass-panel relative z-10">
-      <div className="flex items-center gap-2.5">
-        <div className="relative w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center glow-primary">
-          <Sparkles className="w-4 h-4 text-primary-foreground" />
-          <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-white/20" />
-        </div>
-        <div className="flex items-baseline gap-2">
-          <span className="text-[15px] font-semibold tracking-tight text-glow">Нейромод</span>
-          <span className="text-[11px] text-muted-foreground font-mono">v0.3 · LAB</span>
-        </div>
+      <div className="flex items-center gap-3">
+        <img src={modumLogo} alt="Modum Lab" className="h-7 w-auto invert brightness-200" />
+        <span className="text-[11px] text-muted-foreground font-mono">v0.3 · LAB</span>
       </div>
 
       <div className="flex items-center gap-1.5">
